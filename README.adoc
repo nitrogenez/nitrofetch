@@ -1,0 +1,24 @@
+= nitrofetch
+Andrij Glyko <nitrogenez.dev@tuta.io>
+v0.1, 2024-06-03
+
+:toc:
+:homepage: https://github.com/nitrogenez/nitrofetch
+
+== Add new logos
+
+First of, you need to add plain text ascii art to src/logos with the name of
+the logo.
+
+Then you need to go to the last lines of src/Logo.zig, and add the following to the 
+`logos`:
+
+[source][zig]
+=============
+...
+    .{ "distro_id", @embedFile("logos/distro_id.ascii") },
+...
+=============
+
+`distro_id` being ID field from your distro's `/etc/os-release`.
+
