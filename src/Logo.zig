@@ -95,6 +95,7 @@ pub const logos = std.ComptimeStringMap([]const u8, .{
     .{ "ubuntu", @embedFile("logos/ubuntu.ascii") },
     .{ "fedora", @embedFile("logos/fedora.ascii") },
     .{ "crystal", @embedFile("logos/crystal.ascii") },
+    .{ "endeavouros", @embedFile("logos/endeavouros.ascii") },
     .{ "elbrus", @embedFile("logos/elbrus.ascii") },
     .{ "nixos", @embedFile("logos/nixos.ascii") },
     .{ "parabola", @embedFile("logos/parabola.ascii") },
