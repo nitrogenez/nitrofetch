@@ -87,11 +87,8 @@ fn hckrPrint(comptime fmt: []const u8, args: anytype, w: anytype) !void {
     try w.writeAll("\x1B[0m");
 }
 
-// master zig chickanery
-const map_t = if (@hasDecl(std, "ComptimeStringMap")) std.ComptimeStringMap else std.StaticStringMap;
-
 // Add your distro logos here.
-pub const logos = map_t([]const u8, .{
+const logo_tuple = .{
     .{ "aix", @embedFile("logos/aix.ascii") },
     .{ "arch", @embedFile("logos/arch.ascii") },
     .{ "linux", @embedFile("logos/linux.ascii") },
@@ -116,4 +113,10 @@ pub const logos = map_t([]const u8, .{
     .{ "postmarketos", @embedFile("logos/postmarketos.ascii") },
     .{ "pureos", @embedFile("logos/pureos.ascii") },
     .{ "raspbian", @embedFile("logos/raspbian.ascii") },
-});
+};
+
+// master zig chickanery
+pub const logos = if (@hasDecl(std, "ComptimeStringMap"))
+    std.ComptimeStringMap([]const u8, logo_tuple)
+else
+    std.StaticStringMap([]const u8).initComptime(logo_tuple);
