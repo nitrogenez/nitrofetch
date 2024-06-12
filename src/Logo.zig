@@ -87,7 +87,11 @@ fn hckrPrint(comptime fmt: []const u8, args: anytype, w: anytype) !void {
     try w.writeAll("\x1B[0m");
 }
 
-pub const logos = std.ComptimeStringMap([]const u8, .{
+// master zig chickanery
+const map_t = if (@hasDecl(std, "ComptimeStringMap")) std.ComptimeStringMap else std.StaticStringMap;
+
+// Add your distro logos here.
+pub const logos = map_t([]const u8, .{
     .{ "aix", @embedFile("logos/aix.ascii") },
     .{ "arch", @embedFile("logos/arch.ascii") },
     .{ "linux", @embedFile("logos/linux.ascii") },
@@ -101,4 +105,15 @@ pub const logos = std.ComptimeStringMap([]const u8, .{
     .{ "parabola", @embedFile("logos/parabola.ascii") },
     .{ "popos", @embedFile("logos/popos.ascii") },
     .{ "ukraine", @embedFile("logos/ukraine.ascii") },
+    .{ "artix", @embedFile("logos/artix.ascii") },
+    .{ "centos", @embedFile("logos/centos.ascii") },
+    .{ "gentoo", @embedFile("logos/gentoo.ascii") },
+    .{ "guix", @embedFile("logos/guix.ascii") },
+    .{ "hyperbola", @embedFile("logos/hyperbola.ascii") },
+    .{ "manjaro", @embedFile("logos/manjaro.ascii") },
+    .{ "linuxmint", @embedFile("logos/linuxmint.ascii") },
+    .{ "mx", @embedFile("logos/mx.ascii") },
+    .{ "postmarketos", @embedFile("logos/postmarketos.ascii") },
+    .{ "pureos", @embedFile("logos/pureos.ascii") },
+    .{ "raspbian", @embedFile("logos/raspbian.ascii") },
 });
