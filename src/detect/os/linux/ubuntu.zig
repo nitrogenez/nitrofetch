@@ -5,14 +5,14 @@ const Info = @import("../Info.zig");
 pub fn getFlavor(ctx: *Info) bool {
     const xdg = std.posix.getenv("XDG_CONFIG_DIRS") orelse return false;
 
-    if (getFlavorXubuntu(ctx, xdg)) |b| return b;
-    if (getFlavorLubuntu(ctx, xdg)) |b| return b;
-    if (getFlavorKubuntu(ctx, xdg)) |b| return b;
-    if (getFlavorBudgie(ctx, xdg)) |b| return b;
-    if (getFlavorCinnamon(ctx, xdg)) |b| return b;
-    if (getFlavorMate(ctx, xdg)) |b| return b;
-    if (getFlavorStudio(ctx, xdg)) |b| return b;
-    if (getFlavorTouch(ctx, xdg)) |b| return b;
+    if (getFlavorXubuntu(ctx, xdg)) return true;
+    if (getFlavorLubuntu(ctx, xdg)) return true;
+    if (getFlavorKubuntu(ctx, xdg)) return true;
+    if (getFlavorBudgie(ctx, xdg)) return true;
+    if (getFlavorCinnamon(ctx, xdg)) return true;
+    if (getFlavorMate(ctx, xdg)) return true;
+    if (getFlavorStudio(ctx, xdg)) return true;
+    if (getFlavorTouch(ctx, xdg)) return true;
 
     return false;
 }
@@ -25,7 +25,7 @@ fn setFlavor(ctx: *Info, name: []const u8, id: []const u8) bool {
     return true;
 }
 
-pub fn getFlavorXubuntu(ctx: *Info, dirs: []const u8) void {
+pub fn getFlavorXubuntu(ctx: *Info, dirs: []const u8) bool {
     if (!util.containsOneOf(dirs, &.{ "xfce", "xubuntu" }))
         return false;
     return setFlavor(ctx, "Xubuntu", "xubuntu");

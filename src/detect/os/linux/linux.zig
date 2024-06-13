@@ -5,12 +5,12 @@ const Info = @import("../Info.zig");
 
 pub fn detectDistro(ctx: *Info, gpa: std.mem.Allocator) bool {
     if (parseOsRelease(ctx, gpa)) {
-        if (std.mem.eql(u8, ctx.id, "ubuntu")) ubuntu.getFlavor(ctx);
+        if (std.mem.eql(u8, ctx.id, "ubuntu")) _ = ubuntu.getFlavor(ctx);
         return true;
     }
 
     if (parseLsbRelease(ctx, gpa)) {
-        if (std.mem.eql(u8, ctx.id, "ubuntu")) ubuntu.getFlavor(ctx);
+        if (std.mem.eql(u8, ctx.id, "ubuntu")) _ = ubuntu.getFlavor(ctx);
         return true;
     }
     return false;
@@ -27,8 +27,8 @@ fn parseLsbRelease(ctx: *Info, gpa: std.mem.Allocator) bool {
 }
 
 fn parseOsRelease(ctx: *Info, gpa: std.mem.Allocator) bool {
-    const f = std.fs.openFileAbsolute("/etc/os-release") catch blk: {
-        break :blk std.fs.openFileAbsolute("/usr/lib/os-release") catch return false;
+    const f = std.fs.openFileAbsolute("/etc/os-release", .{}) catch blk: {
+        break :blk std.fs.openFileAbsolute("/usr/lib/os-release", .{}) catch return false;
     };
     defer f.close();
 
@@ -48,7 +48,7 @@ fn parsePropertiesLine(ctx: *Info, gpa: std.mem.Allocator, comptime field_map: a
 }
 
 fn parseProperties(ctx: *Info, gpa: std.mem.Allocator, comptime field_map: anytype, src: []const u8) bool {
-    var stream = std.io.fixedBufferStream(&src);
+    var stream = std.io.fixedBufferStream(src);
     var lines_processed: usize = 0;
 
     while (true) {
@@ -59,7 +59,7 @@ fn parseProperties(ctx: *Info, gpa: std.mem.Allocator, comptime field_map: anyty
         };
         var line_it = std.mem.splitScalar(u8, line, '=');
         const name = std.mem.trim(u8, line_it.first(), " \t\r\n");
-        const value = std.mem.trim(u8, line_it.next() orelse continue, " \t\r\n");
+        const value = std.mem.trim(u8, line_it.next() orelse continue, " \t\r\n\"");
 
         if (parsePropertiesLine(ctx, gpa, field_map, name, value)) lines_processed += 1;
     }

@@ -11,6 +11,15 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
     b.installArtifact(exe);
+
+    const exe_indev = b.addExecutable(.{
+        .name = "nitrofetch-improved",
+        .root_source_file = b.path("src/main_new.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
+    b.installArtifact(exe_indev);
+
     const run_cmd = b.addRunArtifact(exe);
 
     run_cmd.step.dependOn(b.getInstallStep());
