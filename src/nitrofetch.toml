@@ -1,0 +1,28 @@
+separator = "  "
+default_logo = "tux"
+order = [ "custom_header", "os", "custom_msg", "custom_msg_2", "custom_footer" ]
+
+[[modules]]
+id = "os"
+icon_foreground = "blue"
+icon = "󰌽"
+
+[[modules]]
+id = "custom_msg"
+icon_foreground = "blue"
+icon = "  "
+text = "This is a custom message added dynamically"
+
+[[modules]]
+id = "custom_msg_2"
+icon_foreground = "blue"
+icon = "  "
+text = "Using the TOML config file"
+
+[[modules]]
+id = "custom_footer"
+text = "└───────────────────────────┘"
+
+[[modules]]
+id = "custom_header"
+text = "┌───────────────────────────┐"

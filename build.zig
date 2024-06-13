@@ -4,6 +4,9 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
+    const toml_dep = b.dependency("zig-toml", .{ .optimize = optimize, .target = target });
+    const toml_mod = toml_dep.module("zig-toml");
+
     const exe = b.addExecutable(.{
         .name = "nitrofetch",
         .root_source_file = b.path("src/main.zig"),
@@ -19,6 +22,9 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
     b.installArtifact(exe_indev);
+
+    exe.root_module.addImport("toml", toml_mod);
+    exe_indev.root_module.addImport("toml", toml_mod);
 
     const run_cmd = b.addRunArtifact(exe);
 

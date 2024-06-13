@@ -1,5 +1,11 @@
 .{
     .name = "nitrofetch",
     .version = "0.0.1",
+    .dependencies = .{
+        .@"zig-toml" = .{
+            .url = "git+https://github.com/sam701/zig-toml/#67e35c75c5d11caf398bccae39d14d7187d1a952",
+            .hash = "1220ced9b2f6943f688ce1e20a40f143d83c4182320e4b9d30e470b010d44b356f0a",
+        },
+    },
     .paths = .{""},
 }
